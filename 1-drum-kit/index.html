@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>1-drum-kit</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="keys">
+      <!-- @ keycode.info -->
+      <div data-key="65" data-key="65" class="key">
+        <kbd>A</kbd>
+        <span class="sound">air</span>
+      </div>
+      <div data-key="83" class="key">
+        <kbd>S</kbd>
+        <span class="sound">ball</span>
+      </div>
+      <div data-key="68" class="key">
+        <kbd>D</kbd>
+        <span class="sound">base</span>
+      </div>
+      <div data-key="70" class="key">
+        <kbd>F</kbd>
+        <span class="sound">clap</span>
+      </div>
+      <div data-key="71" class="key">
+        <kbd>G</kbd>
+        <span class="sound">drum</span>
+      </div>
+      <div data-key="72" class="key">
+        <kbd>H</kbd>
+        <span class="sound">hammer</span>
+      </div>
+      <div data-key="74" class="key">
+        <kbd>j</kbd>
+        <span class="sound">punch</span>
+      </div>
+      <div data-key="75" class="key">
+        <kbd>K</kbd>
+        <span class="sound">slap-clap</span>
+      </div>
+      <div data-key="76" class="key">
+        <kbd>L</kbd>
+        <span class="sound">soft-punch</span>
+      </div>
+    </div>
+    <!-- ? -->
+    <!--!  -->
+    <!-- ? -->
+    <audio data-key="65" src="./assets/air.wav"></audio>
+    <audio data-key="83" src="./assets/ball.wav"></audio>
+    <audio data-key="68" src="./assets/base.wav"></audio>
+    <audio data-key="70" src="./assets/clap.wav"></audio>
+    <audio data-key="71" src="./assets/drum.wav"></audio>
+    <audio data-key="72" src="./assets/hammer.wav"></audio>
+    <audio data-key="74" src="./assets/punch.wav"></audio>
+    <audio data-key="75" src="./assets/slap-clap.wav"></audio>
+    <audio data-key="76" src="./assets/soft-punch.wav"></audio>
+
+    <!-- ? -->
+    <!--!  -->
+    <!-- ? -->
+    <script>
+      window.addEventListener("keydown", (e) => {
+        //   console.log(e.keyCode);
+        const key = document.querySelector(`.key[data-key="${e.keyCode}"]`); // animation on key when pressing
+        const audio = document.querySelector(`audio[data-key="${e.keyCode}"]`);
+
+        if (!audio) return; //  stop the function from running
+        audio.currentTime = 0; // rewind to the start
+        audio.play(); // if we sue this only it play only 1 time
+        key.classList.add("playing"); // add playing class to the key
+        key.classList.remove("playing"); // add playing class to the key
+        key.classList.toggle("playing"); // add playing class to the key
+      });
+
+      const keys = document.querySelectorAll(".key");
+
+      keys.forEach(
+        (key) => key.addEventListener("transitionend", removeTransition) // pass the function reference
+      );
+
+      function removeTransition(e) {
+        if (e.propertyName !== "transform") return; // Skip if it's not a transform
+        // e.target.classList.remove("playing"); // Remove playing class
+        this.classList.remove("playing"); // Remove playing class
+      }
+    </script>
+  </body>
+</html>
